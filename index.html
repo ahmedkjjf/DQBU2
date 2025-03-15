@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم بالبوت</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .banner {
+            text-align: center;
+            color: #ff6b6b;
+            font-family: monospace;
+            white-space: pre;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #3d3d3d;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff4f4f;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #4CAF50;
+        }
+
+        .error {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="banner" id="banner">
+ __   __  _______  ___      ___     
+|  | |  ||       ||   |    |   |    
+|  |_|  ||    ___||   |    |   |    
+|       ||   |___ |   |    |   |    
+|       ||    ___||   |___ |   |___ 
+|   _   ||   |___ |       ||       |
+|__| |__||_______||_______||_______|
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="token" placeholder="أدخل رمز البوت" />
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="serverId" placeholder="أدخل معرف الخادم" />
+        </div>
+
+        <div class="actions">
+            <button onclick="handleAction(1)">حظر الأعضاء</button>
+            <button onclick="handleAction(2)">إرسال رسائل متكررة</button>
+            <button onclick="handleAction(3)">تدمير الخادم</button>
+        </div>
+
+        <div id="spamOptions" class="hidden form-group">
+            <input type="text" id="spamMessage" placeholder="الرسالة المراد إرسالها" />
+            <input type="number" id="messageCount" placeholder="عدد الرسائل" />
+            <label>
+                <input type="checkbox" id="mentionEveryone" />
+                منشن للجميع
+            </label>
+            <label>
+                <input type="checkbox" id="allChannels" />
+                إرسال في جميع القنوات
+            </label>
+            <div id="channelIdContainer">
+                <input type="text" id="channelId" placeholder="معرف القناة المحددة" />
+            </div>
+            <button onclick="startSpam()">بدء الإرسال</button>
+        </div>
+
+        <div id="status" class="hidden"></div>
+    </div>
+
+    <script>
+        document.getElementById('allChannels').addEventListener('change', function() {
+            const channelIdContainer = document.getElementById('channelIdContainer');
+            channelIdContainer.style.display = this.checked ? 'none' : 'block';
+        });
+
+        function showStatus(message, isError = false) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = isError ? 'error' : 'success';
+            statusDiv.classList.remove('hidden');
+            setTimeout(() => statusDiv.classList.add('hidden'), 3000);
+        }
+
+        function handleAction(action) {
+            const token = document.getElementById('token').value;
+            const serverId = document.getElementById('serverId').value;
+
+            if (!token || !serverId) {
+                showStatus('الرجاء إدخال رمز البوت ومعرف الخادم', true);
+                return;
+            }
+
+            if (action === 2) {
+                document.getElementById('spamOptions').classList.remove('hidden');
+            } else {
+                document.getElementById('spamOptions').classList.add('hidden');
+                
+                fetch('http://localhost:5000/api/action', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: action,
+                        token: token,
+                        serverId: serverId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showStatus(data.message || 'تم تنفيذ الإجراء بنجاح');
+                })
+                .catch(error => {
+                    showStatus('حدث خطأ أثناء تنفيذ الإجراء', true);
+                });
+            }
+        }
+
+        function startSpam() {
+            const token = document.getElementById('token').value;
+            const serverId = document.getElementById('serverId').value;
+            const message = document.getElementById('spamMessage').value;
+            const count = document.getElementById('messageCount').value;
+            const mentionEveryone = document.getElementById('mentionEveryone').checked;
+            const allChannels = document.getElementById('allChannels').checked;
+            const channelId = document.getElementById('channelId').value;
+
+            if (!message || !count) {
+                showStatus('الرجاء إدخال الرسالة وعدد الرسائل', true);
+                return;
+            }
+
+            if (!allChannels && !channelId) {
+                showStatus('الرجاء إدخال معرف القناة أو اختيار جميع القنوات', true);
+                return;
+            }
+
+            fetch('http://localhost:5000/api/spam', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token: token,
+                    serverId: serverId,
+                    message: message,
+                    count: count,
+                    mentionEveryone: mentionEveryone,
+                    allChannels: allChannels,
+                    channelId: channelId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                showStatus(data.message || 'تم بدء إرسال الرسائل');
+            })
+            .catch(error => {
+                showStatus('حدث خطأ أثناء إرسال الرسائل', true);
+            });
+        }
+    </script>
+</body>
+</html>
