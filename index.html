@@ -168,7 +168,7 @@
             } else {
                 document.getElementById('spamOptions').classList.add('hidden');
                 
-                fetch('http://localhost:5000/api/action', {
+                fetch('https://alzaa.netlify.app//api/action', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -208,7 +208,7 @@
                 return;
             }
 
-            fetch('http://localhost:5000/api/spam', {
+            fetch('https://alzaa.netlify.app//api/spam', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
