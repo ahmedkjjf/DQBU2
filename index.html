@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <title>موقع ثنائي اللغة + مترجم فوري</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="تست من قبل الزعابي " />
-  
+  <meta name="description" content="موقع ثنائي اللغة مع مترجم فوري عربي-إنجليزي" />
+
   <!-- Tesseract.js للتعرف على النص من الصور -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
 
@@ -357,11 +357,45 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .output-header h3 {
       font-size: 1.1rem;
       font-weight: 600;
+    }
+
+    .output-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .action-btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .action-btn.small {
+      padding: 6px 10px;
+      font-size: 0.8rem;
     }
 
     .copy-btn {
@@ -553,6 +587,246 @@
       border-top-color: transparent;
     }
 
+    /* تاريخ الترجمات */
+    .history-section {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .history-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      padding: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .history-item:hover {
+      border-color: var(--primary);
+      transform: translateX(-4px);
+    }
+
+    .history-item-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .history-item-translation {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+
+    .history-item-date {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+
+    /* إحصائيات */
+    .stats-section {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .stat-label {
+      color: var(--text-light);
+    }
+
+    .stat-value {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* البحث في التاريخ */
+    .history-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .history-search {
+      flex: 1;
+      min-width: 150px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+
+    .history-search:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* الأدوات الصوتية */
+    .voice-tools {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .voice-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .voice-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .voice-btn.active {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+
+    .voice-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* المفضلة */
+    .favorites-section {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .favorites-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .favorites-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .favorites-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .favorite-item {
+      padding: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .favorite-content {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .favorite-item-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .favorite-item-translation {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .favorite-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .favorite-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .favorite-btn:hover {
+      background: var(--error);
+      color: #fff;
+      border-color: var(--error);
+    }
+
+    .favorite-btn.star {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .favorite-btn.star:hover {
+      background: var(--primary-dark);
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 24px;
@@ -613,10 +887,10 @@
       <div class="logo" data-i18n="logo">موقعي التجريبي</div>
 
       <div class="header-controls">
-        <div class="language-switch">
+      <div class="language-switch">
           <span data-i18n="languageLabel" style="padding: 0 8px; font-size: 0.9rem; color: var(--text-light);">اللغة:</span>
-          <button class="lang-btn active" data-lang="ar">العربية</button>
-          <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn active" data-lang="ar">العربية</button>
+        <button class="lang-btn" data-lang="en">English</button>
         </div>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
       </div>
@@ -642,6 +916,8 @@
         <div class="feature-card" data-i18n="feature2">🌐 دعم لغتين: عربي / إنجليزي</div>
         <div class="feature-card" data-i18n="feature3">📱 متوافق مع الجوال</div>
         <div class="feature-card" data-i18n="feature4">🌓 وضع داكن ووضع فاتح</div>
+        <div class="feature-card" data-i18n="feature5">📷 ترجمة من الصور</div>
+        <div class="feature-card" data-i18n="feature6">💾 حفظ تاريخ الترجمات</div>
       </div>
     </div>
 
@@ -700,11 +976,73 @@
       <div class="output-section">
         <div class="output-header">
           <h3 data-i18n="outputTitle">الناتج:</h3>
-          <button class="copy-btn" id="copyBtn" data-i18n="copyBtn">
-            <span>📋</span> <span>نسخ</span>
-          </button>
+          <div class="output-actions">
+            <button class="action-btn" id="favoriteBtn" title="إضافة للمفضلة" data-i18n="addToFavorites">
+              <span>⭐</span>
+            </button>
+            <button class="action-btn" id="shareBtn" title="مشاركة" data-i18n="shareTranslation">
+              <span>🔗</span>
+            </button>
+            <button class="action-btn" id="clearBtn" title="مسح النص" data-i18n="clearText">
+              <span>🗑️</span>
+            </button>
+            <button class="action-btn" id="downloadBtn" title="تحميل كملف" data-i18n="downloadText">
+              <span>💾</span>
+            </button>
+            <button class="copy-btn" id="copyBtn" data-i18n="copyBtn">
+              <span>📋</span> <span>نسخ</span>
+            </button>
+          </div>
         </div>
         <div id="outputText" data-placeholder="ستظهر الترجمة هنا..."></div>
+      </div>
+      
+      <!-- تاريخ الترجمات -->
+      <div class="history-section" id="historySection" style="display: none;">
+        <div class="history-header">
+          <h3 data-i18n="historyTitle">تاريخ الترجمات</h3>
+          <div class="history-controls">
+            <input type="text" id="historySearch" class="history-search" placeholder="بحث..." data-i18n-placeholder="searchHistory" />
+            <button class="action-btn small" id="exportHistoryBtn" title="تصدير" data-i18n="exportHistory">📥</button>
+            <button class="action-btn small" id="importHistoryBtn" title="استيراد" data-i18n="importHistory">📤</button>
+            <button class="action-btn small" id="clearHistoryBtn" data-i18n="clearHistory">مسح</button>
+          </div>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+      
+      <!-- أدوات صوتية -->
+      <div class="voice-tools">
+        <button class="voice-btn" id="speakInputBtn" title="قراءة النص المدخل" data-i18n="speakInput">
+          <span>🔊</span> <span>قراءة النص</span>
+        </button>
+        <button class="voice-btn" id="speakOutputBtn" title="قراءة الترجمة" data-i18n="speakOutput">
+          <span>🔊</span> <span>قراءة الترجمة</span>
+        </button>
+        <button class="voice-btn" id="voiceInputBtn" title="إدخال صوتي" data-i18n="voiceInput">
+          <span>🎤</span> <span>إدخال صوتي</span>
+        </button>
+      </div>
+      
+      <!-- المفضلة -->
+      <div class="favorites-section" id="favoritesSection" style="display: none;">
+        <div class="favorites-header">
+          <h3 data-i18n="favoritesTitle">المفضلة</h3>
+          <button class="action-btn small" id="clearFavoritesBtn" data-i18n="clearFavorites">مسح الكل</button>
+        </div>
+        <div class="favorites-list" id="favoritesList"></div>
+      </div>
+      
+      <!-- إحصائيات -->
+      <div class="stats-section">
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="totalTranslations">إجمالي الترجمات:</span>
+          <span class="stat-value" id="totalTranslations">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="charactersTranslated">الأحرف المترجمة:</span>
+          <span class="stat-value" id="totalCharacters">0</span>
+        </div>
       </div>
     </div>
 
@@ -730,6 +1068,8 @@
         feature2: "🌐 دعم لغتين: عربي / إنجليزي",
         feature3: "📱 متوافق مع الجوال",
         feature4: "🌓 وضع داكن ووضع فاتح",
+        feature5: "📷 ترجمة من الصور",
+        feature6: "💾 حفظ تاريخ الترجمات",
         translatorTitle: "مترجم فوري",
         imageTranslatorTitle: "ترجمة من صورة",
         uploadImage: "اختر صورة أو اسحبها هنا",
@@ -742,6 +1082,23 @@
         outputTitle: "الناتج:",
         copyBtn: "نسخ",
         copied: "تم النسخ!",
+        clearText: "مسح",
+        downloadText: "تحميل",
+        addToFavorites: "مفضلة",
+        shareTranslation: "مشاركة",
+        historyTitle: "تاريخ الترجمات",
+        clearHistory: "مسح",
+        searchHistory: "بحث في التاريخ...",
+        exportHistory: "تصدير",
+        importHistory: "استيراد",
+        favoritesTitle: "المفضلة",
+        clearFavorites: "مسح الكل",
+        speakInput: "قراءة النص",
+        speakOutput: "قراءة الترجمة",
+        voiceInput: "إدخال صوتي",
+        listening: "جاري الاستماع...",
+        totalTranslations: "إجمالي الترجمات:",
+        charactersTranslated: "الأحرف المترجمة:",
         footerText: "يمكن تعديل كل شيء بسهولة.",
         allRights: "جميع الحقوق محفوظة",
         errorNetwork: "خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
@@ -760,6 +1117,8 @@
         feature2: "🌐 Two languages: Arabic / English",
         feature3: "📱 Mobile-friendly",
         feature4: "🌓 Dark and light mode",
+        feature5: "📷 Translate from images",
+        feature6: "💾 Save translation history",
         translatorTitle: "Instant Translator",
         imageTranslatorTitle: "Translate from Image",
         uploadImage: "Choose image or drag it here",
@@ -772,6 +1131,23 @@
         outputTitle: "Output:",
         copyBtn: "Copy",
         copied: "Copied!",
+        clearText: "Clear",
+        downloadText: "Download",
+        addToFavorites: "Favorite",
+        shareTranslation: "Share",
+        historyTitle: "Translation History",
+        clearHistory: "Clear",
+        searchHistory: "Search history...",
+        exportHistory: "Export",
+        importHistory: "Import",
+        favoritesTitle: "Favorites",
+        clearFavorites: "Clear All",
+        speakInput: "Speak Input",
+        speakOutput: "Speak Output",
+        voiceInput: "Voice Input",
+        listening: "Listening...",
+        totalTranslations: "Total Translations:",
+        charactersTranslated: "Characters Translated:",
         footerText: "Everything can be edited easily.",
         allRights: "All rights reserved",
         errorNetwork: "Network error. Please try again.",
@@ -905,6 +1281,12 @@
           outputText.textContent = result;
           translationDirection = { from, to };
           updateTranslateButtons();
+          
+          // حفظ في التاريخ (فقط إذا كان النص مختلف عن السابق)
+          const currentOutput = outputText.textContent.trim();
+          if (currentOutput !== result) {
+            saveTranslation(txt, result, from, to);
+          }
         }
       } catch (error) {
         // في الترجمة التلقائية، لا نعرض رسالة خطأ (لتجنب الإزعاج)
@@ -940,7 +1322,7 @@
         }
 
         // إنشاء URL مع معالجة خاصة للأحرف الخاصة
-        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
         
         // إضافة timeout للطلب
         const controller = new AbortController();
@@ -959,7 +1341,7 @@
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        const data = await response.json();
+      const data = await response.json();
         
         // التحقق من بنية البيانات
         if (!data || !data.responseData) {
@@ -1021,6 +1403,9 @@
           outputText.textContent = result;
           translationDirection = { from, to };
           updateTranslateButtons();
+          
+          // حفظ في التاريخ
+          saveTranslation(txt, result, from, to);
         } else {
           throw new Error("Empty translation result");
         }
@@ -1057,6 +1442,467 @@
     translateToArBtn.addEventListener("click", () => {
       performTranslation("en", "ar");
     });
+
+    // ========== إدارة التاريخ والإحصائيات ==========
+    let translationHistory = JSON.parse(localStorage.getItem("translationHistory") || "[]");
+    let totalTranslationsCount = parseInt(localStorage.getItem("totalTranslations") || "0");
+    let totalCharactersCount = parseInt(localStorage.getItem("totalCharacters") || "0");
+
+    function saveTranslation(original, translated, from, to) {
+      const translation = {
+        id: Date.now(),
+        original: original,
+        translated: translated,
+        from: from,
+        to: to,
+        date: new Date().toISOString()
+      };
+      
+      translationHistory.unshift(translation);
+      if (translationHistory.length > 50) {
+        translationHistory = translationHistory.slice(0, 50);
+      }
+      
+      localStorage.setItem("translationHistory", JSON.stringify(translationHistory));
+      
+      totalTranslationsCount++;
+      totalCharactersCount += original.length + translated.length;
+      localStorage.setItem("totalTranslations", totalTranslationsCount.toString());
+      localStorage.setItem("totalCharacters", totalCharactersCount.toString());
+      
+      updateStats();
+      updateHistory();
+    }
+
+    function updateStats() {
+      document.getElementById("totalTranslations").textContent = totalTranslationsCount;
+      document.getElementById("totalCharacters").textContent = totalCharactersCount.toLocaleString();
+    }
+
+    function updateHistory() {
+      const historyList = document.getElementById("historyList");
+      const historySection = document.getElementById("historySection");
+      
+      if (translationHistory.length === 0) {
+        historySection.style.display = "none";
+        return;
+      }
+      
+      historySection.style.display = "block";
+      historyList.innerHTML = "";
+      
+      translationHistory.slice(0, 10).forEach(item => {
+        const historyItem = document.createElement("div");
+        historyItem.className = "history-item";
+        
+        const date = new Date(item.date);
+        const dateStr = date.toLocaleDateString(currentLang === "ar" ? "ar-SA" : "en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+        
+        historyItem.innerHTML = `
+          <div class="history-item-text">${item.original.substring(0, 100)}${item.original.length > 100 ? "..." : ""}</div>
+          <div class="history-item-translation">${item.translated.substring(0, 100)}${item.translated.length > 100 ? "..." : ""}</div>
+          <div class="history-item-date">${dateStr}</div>
+        `;
+        
+        historyItem.addEventListener("click", () => {
+          inputText.value = item.original;
+          outputText.textContent = item.translated;
+          charCount.textContent = item.original.length;
+          translationDirection = { from: item.from, to: item.to };
+          updateTranslateButtons();
+        });
+        
+        historyList.appendChild(historyItem);
+      });
+    }
+
+    const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+    clearHistoryBtn.addEventListener("click", () => {
+      if (confirm(currentLang === "ar" 
+        ? "هل أنت متأكد من مسح تاريخ الترجمات؟" 
+        : "Are you sure you want to clear translation history?")) {
+        translationHistory = [];
+        totalTranslationsCount = 0;
+        totalCharactersCount = 0;
+        localStorage.removeItem("translationHistory");
+        localStorage.removeItem("totalTranslations");
+        localStorage.removeItem("totalCharacters");
+        updateStats();
+        updateHistory();
+      }
+    });
+
+    // ========== المفضلة ==========
+    let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+    function updateFavorites() {
+      const favoritesList = document.getElementById("favoritesList");
+      const favoritesSection = document.getElementById("favoritesSection");
+      
+      if (favorites.length === 0) {
+        favoritesSection.style.display = "none";
+        return;
+      }
+      
+      favoritesSection.style.display = "block";
+      favoritesList.innerHTML = "";
+      
+      favorites.forEach((item, index) => {
+        const favoriteItem = document.createElement("div");
+        favoriteItem.className = "favorite-item";
+        
+        favoriteItem.innerHTML = `
+          <div class="favorite-content">
+            <div class="favorite-item-text">${item.original.substring(0, 80)}${item.original.length > 80 ? "..." : ""}</div>
+            <div class="favorite-item-translation">${item.translated.substring(0, 80)}${item.translated.length > 80 ? "..." : ""}</div>
+          </div>
+          <div class="favorite-actions">
+            <button class="favorite-btn star" onclick="removeFavorite(${index})" title="إزالة من المفضلة">⭐</button>
+          </div>
+        `;
+        
+        favoriteItem.querySelector(".favorite-content").addEventListener("click", () => {
+          inputText.value = item.original;
+          outputText.textContent = item.translated;
+          charCount.textContent = item.original.length;
+          translationDirection = { from: item.from, to: item.to };
+          updateTranslateButtons();
+        });
+        
+        favoritesList.appendChild(favoriteItem);
+      });
+    }
+
+    window.removeFavorite = function(index) {
+      favorites.splice(index, 1);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      updateFavorites();
+    };
+
+    const clearFavoritesBtn = document.getElementById("clearFavoritesBtn");
+    clearFavoritesBtn.addEventListener("click", () => {
+      if (confirm(currentLang === "ar" 
+        ? "هل أنت متأكد من مسح جميع المفضلة؟" 
+        : "Are you sure you want to clear all favorites?")) {
+        favorites = [];
+        localStorage.removeItem("favorites");
+        updateFavorites();
+      }
+    });
+
+    const favoriteBtn = document.getElementById("favoriteBtn");
+    favoriteBtn.addEventListener("click", () => {
+      const original = inputText.value.trim();
+      const translated = outputText.textContent.trim();
+      
+      if (!original || !translated) {
+        showError(currentLang === "ar" 
+          ? "لا يوجد نص لإضافته للمفضلة" 
+          : "No text to add to favorites");
+        return;
+      }
+
+      const favorite = {
+        original: original,
+        translated: translated,
+        from: translationDirection.from,
+        to: translationDirection.to,
+        date: new Date().toISOString()
+      };
+
+      // التحقق من عدم التكرار
+      const exists = favorites.some(f => 
+        f.original === favorite.original && f.translated === favorite.translated
+      );
+
+      if (!exists) {
+        favorites.unshift(favorite);
+        if (favorites.length > 100) {
+          favorites = favorites.slice(0, 100);
+        }
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        updateFavorites();
+        
+        favoriteBtn.innerHTML = "<span>✓</span>";
+        setTimeout(() => {
+          favoriteBtn.innerHTML = "<span>⭐</span>";
+        }, 2000);
+      } else {
+        showError(currentLang === "ar" 
+          ? "هذه الترجمة موجودة بالفعل في المفضلة" 
+          : "This translation is already in favorites");
+      }
+    });
+
+    // ========== مشاركة الترجمة ==========
+    const shareBtn = document.getElementById("shareBtn");
+    shareBtn.addEventListener("click", async () => {
+      const original = inputText.value.trim();
+      const translated = outputText.textContent.trim();
+      
+      if (!original || !translated) {
+        showError(currentLang === "ar" 
+          ? "لا يوجد نص للمشاركة" 
+          : "No text to share");
+        return;
+      }
+
+      const shareText = `${original}\n\n${translated}`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: currentLang === "ar" ? "ترجمة" : "Translation",
+            text: shareText
+          });
+        } catch (error) {
+          // Fallback to clipboard
+          await navigator.clipboard.writeText(shareText);
+          showError(currentLang === "ar" 
+            ? "تم نسخ الترجمة للحافظة" 
+            : "Translation copied to clipboard");
+        }
+      } else {
+        await navigator.clipboard.writeText(shareText);
+        shareBtn.innerHTML = "<span>✓</span>";
+        setTimeout(() => {
+          shareBtn.innerHTML = "<span>🔗</span>";
+        }, 2000);
+      }
+    });
+
+    // ========== البحث في التاريخ ==========
+    const historySearch = document.getElementById("historySearch");
+    historySearch.addEventListener("input", (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      const historyItems = document.querySelectorAll(".history-item");
+      
+      historyItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(searchTerm) ? "block" : "none";
+      });
+    });
+
+    // ========== تصدير/استيراد التاريخ ==========
+    const exportHistoryBtn = document.getElementById("exportHistoryBtn");
+    exportHistoryBtn.addEventListener("click", () => {
+      const data = JSON.stringify(translationHistory, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `translation_history_${new Date().getTime()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    const importHistoryBtn = document.getElementById("importHistoryBtn");
+    importHistoryBtn.addEventListener("click", () => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "application/json";
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const imported = JSON.parse(e.target.result);
+              if (Array.isArray(imported)) {
+                translationHistory = [...imported, ...translationHistory].slice(0, 50);
+                localStorage.setItem("translationHistory", JSON.stringify(translationHistory));
+                updateHistory();
+                showError(currentLang === "ar" 
+                  ? "تم استيراد التاريخ بنجاح" 
+                  : "History imported successfully");
+              }
+            } catch (error) {
+              showError(currentLang === "ar" 
+                ? "خطأ في استيراد الملف" 
+                : "Error importing file");
+            }
+          };
+          reader.readAsText(file);
+        }
+      };
+      input.click();
+    });
+
+    // ========== الأدوات الصوتية ==========
+    const speakInputBtn = document.getElementById("speakInputBtn");
+    const speakOutputBtn = document.getElementById("speakOutputBtn");
+    const voiceInputBtn = document.getElementById("voiceInputBtn");
+    let recognition = null;
+    let synth = window.speechSynthesis;
+
+    // قراءة النص المدخل
+    speakInputBtn.addEventListener("click", () => {
+      const text = inputText.value.trim();
+      if (!text) {
+        showError(currentLang === "ar" 
+          ? "لا يوجد نص للقراءة" 
+          : "No text to speak");
+        return;
+      }
+
+      if (synth.speaking) {
+        synth.cancel();
+        speakInputBtn.classList.remove("active");
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = currentLang === "ar" ? "ar-SA" : "en-US";
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      
+      speakInputBtn.classList.add("active");
+      synth.speak(utterance);
+      
+      utterance.onend = () => {
+        speakInputBtn.classList.remove("active");
+      };
+    });
+
+    // قراءة الترجمة
+    speakOutputBtn.addEventListener("click", () => {
+      const text = outputText.textContent.trim();
+      if (!text) {
+        showError(currentLang === "ar" 
+          ? "لا يوجد ترجمة للقراءة" 
+          : "No translation to speak");
+        return;
+      }
+
+      if (synth.speaking) {
+        synth.cancel();
+        speakOutputBtn.classList.remove("active");
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = translationDirection.to === "ar" ? "ar-SA" : "en-US";
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      
+      speakOutputBtn.classList.add("active");
+      synth.speak(utterance);
+      
+      utterance.onend = () => {
+        speakOutputBtn.classList.remove("active");
+      };
+    });
+
+    // الإدخال الصوتي
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = currentLang === "ar" ? "ar-SA" : "en-US";
+
+      voiceInputBtn.addEventListener("click", () => {
+        if (recognition && !recognition.running) {
+          recognition.start();
+          voiceInputBtn.classList.add("active");
+          voiceInputBtn.disabled = true;
+          voiceInputBtn.innerHTML = `<span>🎤</span> <span>${translations[currentLang].listening}</span>`;
+        } else {
+          recognition.stop();
+          voiceInputBtn.classList.remove("active");
+          voiceInputBtn.disabled = false;
+          voiceInputBtn.innerHTML = `<span>🎤</span> <span>${translations[currentLang].voiceInput}</span>`;
+        }
+      });
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        inputText.value = transcript;
+        charCount.textContent = transcript.length;
+        autoTranslate();
+      };
+
+      recognition.onend = () => {
+        voiceInputBtn.classList.remove("active");
+        voiceInputBtn.disabled = false;
+        voiceInputBtn.innerHTML = `<span>🎤</span> <span>${translations[currentLang].voiceInput}</span>`;
+      };
+
+      recognition.onerror = () => {
+        voiceInputBtn.classList.remove("active");
+        voiceInputBtn.disabled = false;
+        voiceInputBtn.innerHTML = `<span>🎤</span> <span>${translations[currentLang].voiceInput}</span>`;
+        showError(currentLang === "ar" 
+          ? "خطأ في التعرف على الصوت" 
+          : "Speech recognition error");
+      };
+    } else {
+      voiceInputBtn.disabled = true;
+      voiceInputBtn.title = currentLang === "ar" 
+        ? "غير مدعوم في هذا المتصفح" 
+        : "Not supported in this browser";
+    }
+
+    // تحديث اللغة للتعرف على الصوت
+    const originalSetLanguage = setLanguage;
+    setLanguage = function(lang) {
+      originalSetLanguage(lang);
+      if (recognition) {
+        recognition.lang = lang === "ar" ? "ar-SA" : "en-US";
+      }
+      updateFavorites();
+    };
+
+    // ========== أزرار الإجراءات ==========
+    const clearBtn = document.getElementById("clearBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    clearBtn.addEventListener("click", () => {
+      inputText.value = "";
+      outputText.textContent = "";
+      charCount.textContent = "0";
+      hideError();
+      if (synth.speaking) {
+        synth.cancel();
+        speakInputBtn.classList.remove("active");
+        speakOutputBtn.classList.remove("active");
+      }
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      const text = outputText.textContent.trim();
+      if (!text) {
+        showError(currentLang === "ar" 
+          ? "لا يوجد نص للتحميل" 
+          : "No text to download");
+        return;
+      }
+
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `translation_${new Date().getTime()}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // تهيئة المفضلة
+    updateFavorites();
+
+    // تحديث الإحصائيات عند التحميل
+    updateStats();
+    updateHistory();
 
     // نسخ النص
     copyBtn.addEventListener("click", async () => {
@@ -1254,6 +2100,9 @@
             outputText.textContent = translatedText;
             translationDirection = { from, to };
             updateTranslateButtons();
+            
+            // حفظ في التاريخ
+            saveTranslation(extractedText, translatedText, from, to);
           }
         } catch (translateError) {
           // إذا فشلت الترجمة، اعرض النص المستخرج فقط
