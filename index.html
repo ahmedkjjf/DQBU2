@@ -1,236 +1,849 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم بالبوت</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
-            margin: 0;
-            padding: 20px;
-            direction: rtl;
-        }
+  <meta charset="UTF-8" />
+  <title>موقع ثنائي اللغة + مترجم فوري</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="موقع ثنائي اللغة مع مترجم فوري عربي-إنجليزي" />
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #2d2d2d;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --error: #ef4444;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
 
-        .banner {
-            text-align: center;
-            color: #ff6b6b;
-            font-family: monospace;
-            white-space: pre;
-            margin-bottom: 20px;
-        }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f1f5f9;
+      --text-light: #94a3b8;
+      --border: #334155;
+    }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: #3d3d3d;
-            color: #fff;
-            box-sizing: border-box;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: background 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
+    }
 
-        button {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            transition: background-color 0.3s;
-        }
+    .container {
+      background: var(--card-bg);
+      max-width: 1000px;
+      width: 100%;
+      border-radius: 32px;
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+      transition: all 0.3s ease;
+      animation: fadeIn 0.5s ease;
+    }
 
-        button:hover {
-            background-color: #ff4f4f;
-        }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
 
-        .hidden {
-            display: none;
-        }
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        label {
-            display: block;
-            margin: 10px 0;
-        }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-        #status {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-        }
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
 
-        .success {
-            background-color: #4CAF50;
-        }
+    .lang-btn {
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
 
-        .error {
-            background-color: #f44336;
-        }
-    </style>
+    .lang-btn:hover {
+      color: var(--text);
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .theme-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--border);
+      transform: scale(1.05);
+    }
+
+    .content {
+      margin-bottom: 32px;
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .content h2 {
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .content p {
+      margin-bottom: 16px;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      color: var(--text-light);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 8px;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+    }
+
+    .features {
+      margin-top: 32px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      border-radius: 16px;
+      padding: 20px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
+    }
+
+    .translate-box {
+      margin-top: 40px;
+      background: var(--bg);
+      padding: 28px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .translate-box h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .translate-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .translate-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .translate-btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+    }
+
+    .translate-btn.secondary {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .translate-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .translate-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .swap-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.2s ease;
+    }
+
+    .swap-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      transform: rotate(180deg);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      font-size: 1rem;
+      resize: vertical;
+      background: var(--card-bg);
+      color: var(--text);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .char-count {
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    .output-section {
+      margin-top: 24px;
+    }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .output-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+
+    #outputText {
+      min-height: 120px;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 1rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      transition: all 0.2s ease;
+    }
+
+    #outputText:empty::before {
+      content: attr(data-placeholder);
+      color: var(--text-light);
+      font-style: italic;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .footer {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+      animation: shake 0.3s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 24px;
+        border-radius: 24px;
+      }
+
+      .content h1 {
+        font-size: 2rem;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .translate-controls {
+        flex-direction: column;
+      }
+
+      .translate-btn {
+        width: 100%;
+      }
+
+      .footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .content h1 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="banner" id="banner">
- __   __  _______  ___      ___     
-|  | |  ||       ||   |    |   |    
-|  |_|  ||    ___||   |    |   |    
-|       ||   |___ |   |    |   |    
-|       ||    ___||   |___ |   |___ 
-|   _   ||   |___ |       ||       |
-|__| |__||_______||_______||_______|
-        </div>
+  <div class="container">
+    <!-- الهيدر -->
+    <div class="header">
+      <div class="logo" data-i18n="logo">موقعي التجريبي</div>
 
-        <div class="form-group">
-            <input type="text" id="token" placeholder="أدخل رمز البوت" />
+      <div class="header-controls">
+        <div class="language-switch">
+          <span data-i18n="languageLabel" style="padding: 0 8px; font-size: 0.9rem; color: var(--text-light);">اللغة:</span>
+          <button class="lang-btn active" data-lang="ar">العربية</button>
+          <button class="lang-btn" data-lang="en">English</button>
         </div>
-
-        <div class="form-group">
-            <input type="text" id="serverId" placeholder="أدخل معرف الخادم" />
-        </div>
-
-        <div class="actions">
-            <button onclick="handleAction(1)">حظر الأعضاء</button>
-            <button onclick="handleAction(2)">إرسال رسائل متكررة</button>
-            <button onclick="handleAction(3)">تدمير الخادم</button>
-        </div>
-
-        <div id="spamOptions" class="hidden form-group">
-            <input type="text" id="spamMessage" placeholder="الرسالة المراد إرسالها" />
-            <input type="number" id="messageCount" placeholder="عدد الرسائل" />
-            <label>
-                <input type="checkbox" id="mentionEveryone" />
-                منشن للجميع
-            </label>
-            <label>
-                <input type="checkbox" id="allChannels" />
-                إرسال في جميع القنوات
-            </label>
-            <div id="channelIdContainer">
-                <input type="text" id="channelId" placeholder="معرف القناة المحددة" />
-            </div>
-            <button onclick="startSpam()">بدء الإرسال</button>
-        </div>
-
-        <div id="status" class="hidden"></div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+      </div>
     </div>
 
-    <script>
-        document.getElementById('allChannels').addEventListener('change', function() {
-            const channelIdContainer = document.getElementById('channelIdContainer');
-            channelIdContainer.style.display = this.checked ? 'none' : 'block';
-        });
+    <!-- المحتوى -->
+    <div class="content">
+      <h1 data-i18n="title">موقع عربي – إنجليزي سهل الاستخدام</h1>
+      <h2 data-i18n="subtitle">بدّل اللغة بضغطة زر</h2>
 
-        function showStatus(message, isError = false) {
-            const statusDiv = document.getElementById('status');
-            statusDiv.textContent = message;
-            statusDiv.className = isError ? 'error' : 'success';
-            statusDiv.classList.remove('hidden');
-            setTimeout(() => statusDiv.classList.add('hidden'), 3000);
+      <p data-i18n="paragraph1">
+        هذا مثال لموقع بسيط ثنائي اللغة. يمكنك تعديل النصوص والأقسام كما تريد.
+      </p>
+
+      <p data-i18n="paragraph2">
+        التصميم يدعم العربية والإنجليزية بتبديل اتجاه الصفحة تلقائياً. كما يتضمن وضع داكن ووضع فاتح.
+      </p>
+
+      <button class="btn-primary" data-i18n="cta">تواصل معنا الآن</button>
+
+      <div class="features">
+        <div class="feature-card" data-i18n="feature1">✨ واجهة بسيطة وسهلة</div>
+        <div class="feature-card" data-i18n="feature2">🌐 دعم لغتين: عربي / إنجليزي</div>
+        <div class="feature-card" data-i18n="feature3">📱 متوافق مع الجوال</div>
+        <div class="feature-card" data-i18n="feature4">🌓 وضع داكن ووضع فاتح</div>
+      </div>
+    </div>
+
+    <!-- مترجم فوري -->
+    <div class="translate-box">
+      <h2 data-i18n="translatorTitle">مترجم فوري</h2>
+      
+      <div class="translate-controls">
+        <button class="translate-btn primary" id="translateToEn" data-i18n="translateToEn">
+          <span>ترجمة إلى الإنجليزية</span>
+        </button>
+        <button class="swap-btn" id="swapLanguages" title="تبديل الاتجاه">⇄</button>
+        <button class="translate-btn secondary" id="translateToAr" data-i18n="translateToAr">
+          <span>ترجمة إلى العربية</span>
+        </button>
+      </div>
+
+      <textarea 
+        id="inputText" 
+        data-i18n-placeholder="inputPlaceholder"
+        placeholder="اكتب هنا..."
+      ></textarea>
+      <div class="char-count">
+        <span id="charCount">0</span> <span data-i18n="characters">حرف</span>
+      </div>
+
+      <div class="error-message" id="errorMessage"></div>
+
+      <div class="output-section">
+        <div class="output-header">
+          <h3 data-i18n="outputTitle">الناتج:</h3>
+          <button class="copy-btn" id="copyBtn" data-i18n="copyBtn">
+            <span>📋</span> <span>نسخ</span>
+          </button>
+        </div>
+        <div id="outputText" data-placeholder="ستظهر الترجمة هنا..."></div>
+      </div>
+    </div>
+
+    <!-- الفوتر -->
+    <div class="footer">
+      <span data-i18n="footerText">يمكن تعديل كل شيء بسهولة.</span>
+      <span>&copy; <span id="year"></span> - <span data-i18n="allRights">جميع الحقوق محفوظة</span></span>
+    </div>
+  </div>
+
+  <script>
+    // ========== إعدادات اللغة ==========
+    const translations = {
+      ar: {
+        logo: "موقعي التجريبي",
+        languageLabel: "اللغة:",
+        title: "موقع عربي – إنجليزي سهل الاستخدام",
+        subtitle: "بدّل اللغة بضغطة زر",
+        paragraph1: "هذا مثال لموقع بسيط ثنائي اللغة. يمكنك تعديل النصوص والأقسام كما تريد.",
+        paragraph2: "التصميم يدعم العربية والإنجليزية بتبديل اتجاه الصفحة تلقائياً. كما يتضمن وضع داكن ووضع فاتح.",
+        cta: "تواصل معنا الآن",
+        feature1: "✨ واجهة بسيطة وسهلة",
+        feature2: "🌐 دعم لغتين: عربي / إنجليزي",
+        feature3: "📱 متوافق مع الجوال",
+        feature4: "🌓 وضع داكن ووضع فاتح",
+        translatorTitle: "مترجم فوري",
+        translateToEn: "ترجمة إلى الإنجليزية",
+        translateToAr: "ترجمة إلى العربية",
+        inputPlaceholder: "اكتب هنا...",
+        characters: "حرف",
+        outputTitle: "الناتج:",
+        copyBtn: "نسخ",
+        copied: "تم النسخ!",
+        footerText: "يمكن تعديل كل شيء بسهولة.",
+        allRights: "جميع الحقوق محفوظة",
+        errorNetwork: "خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
+        errorEmpty: "يرجى إدخال نص للترجمة.",
+        loading: "جاري الترجمة..."
+      },
+      en: {
+        logo: "My Demo Website",
+        languageLabel: "Language:",
+        title: "Simple Arabic–English Website",
+        subtitle: "Switch language with one click",
+        paragraph1: "This is an example of a simple bilingual website you can edit anytime.",
+        paragraph2: "The design supports Arabic & English automatically. It also includes dark and light modes.",
+        cta: "Contact us now",
+        feature1: "✨ Simple and clean interface",
+        feature2: "🌐 Two languages: Arabic / English",
+        feature3: "📱 Mobile-friendly",
+        feature4: "🌓 Dark and light mode",
+        translatorTitle: "Instant Translator",
+        translateToEn: "Translate to English",
+        translateToAr: "Translate to Arabic",
+        inputPlaceholder: "Type here...",
+        characters: "characters",
+        outputTitle: "Output:",
+        copyBtn: "Copy",
+        copied: "Copied!",
+        footerText: "Everything can be edited easily.",
+        allRights: "All rights reserved",
+        errorNetwork: "Network error. Please try again.",
+        errorEmpty: "Please enter text to translate.",
+        loading: "Translating..."
+      }
+    };
+
+    // ========== إدارة اللغة ==========
+    const langButtons = document.querySelectorAll(".lang-btn");
+    const htmlTag = document.documentElement;
+    let currentLang = localStorage.getItem("preferredLang") || "ar";
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("preferredLang", lang);
+      
+      const dict = translations[lang];
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) el.textContent = dict[key];
+      });
+
+      // تحديث placeholder
+      const inputText = document.getElementById("inputText");
+      if (inputText && dict.inputPlaceholder) {
+        inputText.placeholder = dict.inputPlaceholder;
+      }
+
+      htmlTag.setAttribute("lang", lang);
+      htmlTag.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+
+      langButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
+
+    langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+    });
+
+    // تطبيق اللغة المحفوظة
+    setLanguage(currentLang);
+
+    // ========== إدارة الوضع الداكن ==========
+    const themeToggle = document.getElementById("themeToggle");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+    let currentTheme = localStorage.getItem("theme") || (prefersDark.matches ? "dark" : "light");
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    }
+
+    themeToggle.addEventListener("click", () => {
+      setTheme(currentTheme === "dark" ? "light" : "dark");
+    });
+
+    setTheme(currentTheme);
+
+    // ========== المترجم ==========
+    const inputText = document.getElementById("inputText");
+    const outputText = document.getElementById("outputText");
+    const translateToEnBtn = document.getElementById("translateToEn");
+    const translateToArBtn = document.getElementById("translateToAr");
+    const swapBtn = document.getElementById("swapLanguages");
+    const copyBtn = document.getElementById("copyBtn");
+    const charCount = document.getElementById("charCount");
+    const errorMessage = document.getElementById("errorMessage");
+
+    let translationDirection = { from: "ar", to: "en" };
+
+    // عداد الأحرف
+    inputText.addEventListener("input", () => {
+      charCount.textContent = inputText.value.length;
+    });
+
+    // تبديل اتجاه الترجمة
+    swapBtn.addEventListener("click", () => {
+      translationDirection = {
+        from: translationDirection.to,
+        to: translationDirection.from
+      };
+      updateTranslateButtons();
+    });
+
+    function updateTranslateButtons() {
+      const isArToEn = translationDirection.from === "ar" && translationDirection.to === "en";
+      translateToEnBtn.classList.toggle("primary", isArToEn);
+      translateToEnBtn.classList.toggle("secondary", !isArToEn);
+      translateToArBtn.classList.toggle("primary", !isArToEn);
+      translateToArBtn.classList.toggle("secondary", isArToEn);
+    }
+
+    async function translate(text, from, to) {
+      try {
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error("Network error");
         }
-
-        function handleAction(action) {
-            const token = document.getElementById('token').value;
-            const serverId = document.getElementById('serverId').value;
-
-            if (!token || !serverId) {
-                showStatus('الرجاء إدخال رمز البوت ومعرف الخادم', true);
-                return;
-            }
-
-            if (action === 2) {
-                document.getElementById('spamOptions').classList.remove('hidden');
-            } else {
-                document.getElementById('spamOptions').classList.add('hidden');
-                
-                fetch('https://alzaa.netlify.app//api/action', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: action,
-                        token: token,
-                        serverId: serverId
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    showStatus(data.message || 'تم تنفيذ الإجراء بنجاح');
-                })
-                .catch(error => {
-                    showStatus('حدث خطأ أثناء تنفيذ الإجراء', true);
-                });
-            }
+        
+        const data = await response.json();
+        
+        if (data.responseStatus === 200) {
+          return data.responseData.translatedText;
+        } else {
+          throw new Error("Translation failed");
         }
+      } catch (error) {
+        throw error;
+      }
+    }
 
-        function startSpam() {
-            const token = document.getElementById('token').value;
-            const serverId = document.getElementById('serverId').value;
-            const message = document.getElementById('spamMessage').value;
-            const count = document.getElementById('messageCount').value;
-            const mentionEveryone = document.getElementById('mentionEveryone').checked;
-            const allChannels = document.getElementById('allChannels').checked;
-            const channelId = document.getElementById('channelId').value;
+    async function performTranslation(from, to) {
+      const txt = inputText.value.trim();
+      
+      if (!txt) {
+        showError(translations[currentLang].errorEmpty);
+        return;
+      }
 
-            if (!message || !count) {
-                showStatus('الرجاء إدخال الرسالة وعدد الرسائل', true);
-                return;
-            }
+      hideError();
+      outputText.innerHTML = `<div class="loading"></div> ${translations[currentLang].loading}`;
+      
+      translateToEnBtn.disabled = true;
+      translateToArBtn.disabled = true;
 
-            if (!allChannels && !channelId) {
-                showStatus('الرجاء إدخال معرف القناة أو اختيار جميع القنوات', true);
-                return;
-            }
+      try {
+        const result = await translate(txt, from, to);
+        outputText.textContent = result;
+        translationDirection = { from, to };
+        updateTranslateButtons();
+      } catch (error) {
+        showError(translations[currentLang].errorNetwork);
+        outputText.textContent = "";
+      } finally {
+        translateToEnBtn.disabled = false;
+        translateToArBtn.disabled = false;
+      }
+    }
 
-            fetch('https://alzaa.netlify.app//api/spam', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    token: token,
-                    serverId: serverId,
-                    message: message,
-                    count: count,
-                    mentionEveryone: mentionEveryone,
-                    allChannels: allChannels,
-                    channelId: channelId
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                showStatus(data.message || 'تم بدء إرسال الرسائل');
-            })
-            .catch(error => {
-                showStatus('حدث خطأ أثناء إرسال الرسائل', true);
-            });
+    translateToEnBtn.addEventListener("click", () => {
+      performTranslation("ar", "en");
+    });
+
+    translateToArBtn.addEventListener("click", () => {
+      performTranslation("en", "ar");
+    });
+
+    // نسخ النص
+    copyBtn.addEventListener("click", async () => {
+      const text = outputText.textContent.trim();
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = `<span>✓</span> <span>${translations[currentLang].copied}</span>`;
+        copyBtn.classList.add("copied");
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+          copyBtn.classList.remove("copied");
+        }, 2000);
+      } catch (error) {
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = `<span>✓</span> <span>${translations[currentLang].copied}</span>`;
+        copyBtn.classList.add("copied");
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+          copyBtn.classList.remove("copied");
+        }, 2000);
+      }
+    });
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.add("show");
+      setTimeout(hideError, 5000);
+    }
+
+    function hideError() {
+      errorMessage.classList.remove("show");
+    }
+
+    // ترجمة عند الضغط على Enter (Ctrl/Cmd + Enter)
+    inputText.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        if (translationDirection.from === "ar") {
+          performTranslation("ar", "en");
+        } else {
+          performTranslation("en", "ar");
         }
-    </script>
+      }
+    });
+
+    // ========== تهيئة السنة ==========
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
