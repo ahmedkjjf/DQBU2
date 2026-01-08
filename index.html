@@ -470,6 +470,81 @@
       gap: 12px;
     }
 
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .footer a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+
+    /* عداد الزوار */
+    .visitor-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 14px 22px;
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      z-index: 100;
+      transition: all 0.3s ease;
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+
+    .visitor-counter:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    }
+
+    .counter-icon {
+      font-size: 1.4rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .counter-label {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .counter-value {
+      font-weight: 800;
+      color: #fff;
+      font-size: 1.3rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .visitor-counter {
+        bottom: 10px;
+        left: 10px;
+        padding: 12px 18px;
+        font-size: 0.85rem;
+      }
+      .counter-value {
+        font-size: 1.1rem;
+      }
+    }
+
     .error-message {
       background: rgba(239, 68, 68, 0.1);
       color: var(--error);
@@ -1048,9 +1123,24 @@
 
     <!-- الفوتر -->
     <div class="footer">
-      <span data-i18n="footerText">يمكن تعديل كل شيء بسهولة.</span>
-      <span>&copy; <span id="year"></span> - <span data-i18n="allRights">جميع الحقوق محفوظة</span></span>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; color: var(--primary);" data-i18n="copyrightName">الزعابي</span>
+          <span>&copy; <span id="year"></span> - <span data-i18n="allRights">جميع الحقوق محفوظة</span></span>
+        </div>
+        <a href="https://pay.ziina.com/Ahmedalzaabia" target="_blank" rel="noopener noreferrer" data-i18n="supportLink" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+          <span>💳</span>
+          <span>دعم الموقع عبر Ziina</span>
+        </a>
+      </div>
     </div>
+  </div>
+
+  <!-- عداد الزوار -->
+  <div class="visitor-counter">
+    <span class="counter-icon">👁️</span>
+    <span class="counter-label" data-i18n="visitors">الزوار:</span>
+    <span class="counter-value" id="visitorCount">0</span>
   </div>
 
   <script>
@@ -1100,7 +1190,10 @@
         totalTranslations: "إجمالي الترجمات:",
         charactersTranslated: "الأحرف المترجمة:",
         footerText: "يمكن تعديل كل شيء بسهولة.",
+        copyrightName: "الزعابي",
         allRights: "جميع الحقوق محفوظة",
+        supportLink: "دعم الموقع عبر Ziina",
+        visitors: "الزوار:",
         errorNetwork: "خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
         errorEmpty: "يرجى إدخال نص للترجمة.",
         loading: "جاري الترجمة..."
@@ -1149,7 +1242,10 @@
         totalTranslations: "Total Translations:",
         charactersTranslated: "Characters Translated:",
         footerText: "Everything can be edited easily.",
+        copyrightName: "Alzaabi",
         allRights: "All rights reserved",
+        supportLink: "Support via Ziina",
+        visitors: "Visitors:",
         errorNetwork: "Network error. Please try again.",
         errorEmpty: "Please enter text to translate.",
         loading: "Translating..."
@@ -2126,6 +2222,19 @@
 
     // ========== تهيئة السنة ==========
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ========== عداد الزوار ==========
+    let visitorCount = parseInt(localStorage.getItem("visitorCount") || "0");
+    const lastVisit = localStorage.getItem("lastVisit");
+    const today = new Date().toDateString();
+
+    if (lastVisit !== today) {
+      visitorCount++;
+      localStorage.setItem("visitorCount", visitorCount.toString());
+      localStorage.setItem("lastVisit", today);
+    }
+
+    document.getElementById("visitorCount").textContent = visitorCount.toLocaleString();
   </script>
 </body>
 </html>
