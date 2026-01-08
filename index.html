@@ -2224,17 +2224,27 @@
     document.getElementById("year").textContent = new Date().getFullYear();
 
     // ========== عداد الزوار ==========
-    let visitorCount = parseInt(localStorage.getItem("visitorCount") || "0");
-    const lastVisit = localStorage.getItem("lastVisit");
-    const today = new Date().toDateString();
-
-    if (lastVisit !== today) {
+    // التحقق من أن هذه الجلسة لم يتم عدها من قبل
+    const hasVisitedThisSession = sessionStorage.getItem("hasVisited");
+    
+    if (!hasVisitedThisSession) {
+      // هذه زيارة جديدة في هذه الجلسة
+      let visitorCount = parseInt(localStorage.getItem("visitorCount") || "0");
       visitorCount++;
+      
+      // حفظ العدد المحدث
       localStorage.setItem("visitorCount", visitorCount.toString());
-      localStorage.setItem("lastVisit", today);
+      
+      // تعيين علامة أن هذه الجلسة تم عدها
+      sessionStorage.setItem("hasVisited", "true");
+      
+      // تحديث العداد على الصفحة
+      document.getElementById("visitorCount").textContent = visitorCount.toLocaleString();
+    } else {
+      // إذا كانت الجلسة قد تم عدها، فقط عرض العدد الحالي
+      const visitorCount = parseInt(localStorage.getItem("visitorCount") || "0");
+      document.getElementById("visitorCount").textContent = visitorCount.toLocaleString();
     }
-
-    document.getElementById("visitorCount").textContent = visitorCount.toLocaleString();
   </script>
 </body>
 </html>
